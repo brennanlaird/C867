@@ -29,7 +29,7 @@ public:
 	void set_degree_program();
 	void set_day_to_complete();
 
-	//DEfining the getters for each private class variable
+	//Defining the getters for each private class variable
 	string get_student_id();
 	string get_first_name();
 	string get_last_name();
@@ -40,7 +40,12 @@ public:
 
 
 
-	
+	//DEfine the print method for the student class
+	void stud_print();
+
+
+
+	//Defining a test method - Delete this
 	void student_test();
 
 };

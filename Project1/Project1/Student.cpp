@@ -1,12 +1,14 @@
 #include <iostream>
 
 #include "Student.h"
+#include "Degree.h"
+#include "Roster.h"
 
 using namespace std;
 
 //Constructor for the student class
 Student::Student() {
-	cout << "student constructed" << endl;
+	cout << "student " << "info " << "has been constructed" << endl;
 
 }
 
@@ -32,9 +34,13 @@ string Student::get_last_name() { return last_name; }
 string Student::get_student_email() { return student_email; }
 int Student::get_student_age() { return student_age; }
 DegreeProgram Student::get_degree_program() { return degree_program; }
-//int Student::get_day_to_complete() { return day_to_complete; }
+//int Student::get_day_to_complete() { return day_to_complete[3]; }
 
 
+//Method for the student print function used to print specific student data
+void Student::stud_print() {
+	//nothing here yet
+}
 
 
 
