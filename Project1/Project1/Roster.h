@@ -23,5 +23,5 @@ public:
 
 	void rostertest();
 
-	void parsestring();
+	void parse_string();
 };

@@ -28,7 +28,7 @@ int main ()
 	//testingroster.rostertest();
 	testerstudent.student_test();
 
-	testingroster.parsestring();
+	testingroster.parse_string();
 	
 	
 
