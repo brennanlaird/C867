@@ -3,9 +3,10 @@
 #include <vector>
 #include <string>
 
-#include "Degree.h"
+
 #include "Student.h"
 #include "Roster.h"
+#include "Degree.h"
 
 
 using namespace std;
@@ -41,20 +42,20 @@ void Roster::parse_string() {
 
 		string student = "student";
 		string temp_string;
-		string temp_student_id, temp_first_name, temp_last_name, temp_student_email, age_string;
-		int temp_student_age;
-		
+		string temp_student_id, temp_first_name, temp_last_name, temp_student_email, age_string, day0_string, day1_string, day2_string, degree_string;
+		int temp_student_age, temp_day0, temp_day1, temp_day2;
+		DegreeProgram temp_degree;
 
-		stringstream input_stream; //sets up a string stream and store the single line from student data to that string stream in the next line
+		stringstream input_stream; //sets up a string stream and stores the single line from student data to that string stream in the next line
 		input_stream << studentData[i];
 
 		char delimit = ',';
 
-		//getline(input_stream, temp_string, delimit);
-		cout << "The student id is: " << temp_string << endl;
+			
 		
 		student = student + to_string(i+1); //sets the student string to a unique name based on the loop iteration
 		
+
 				
 		Student temp_student;
 		
@@ -76,18 +77,39 @@ void Roster::parse_string() {
 
 		
 		
-		
-		
-		//getline(input_stream, temp_string, delimit);
+		getline(input_stream, day0_string, delimit);
+		temp_day0 = stoi(day0_string);
 
-	
+		getline(input_stream, day1_string, delimit);
+		temp_day1 = stoi(day1_string);
+
+		getline(input_stream, day2_string, delimit);
+		temp_day2 = stoi(day2_string);
+
+		
+		
+		//this retrieves the string related to the degree progrma
+		getline(input_stream, degree_string, delimit);
+		
+		
+		//depending on the result the if-else statements assign the matching degree program to the enum value
+		if (degree_string == "SECURITY")
+			temp_degree = SECURITY;
+		else if (degree_string == "NETWORK")
+			temp_degree = NETWORK;
+		else if (degree_string == "SOFTWARE")
+			temp_degree = SOFTWARE;
+
+		//sets the enum value for the degree program for the temp student
+		temp_student.set_degree_program(temp_degree);
+		
 			
-		cout << "The student id is: " << temp_student.get_student_id() << flush;
+		cout << "The student id is: " << temp_student.get_student_id() << " and the rest is: " << flush;
 		cout << temp_student.get_first_name()<< ", " << temp_student.get_last_name()<< ", " << temp_student.get_student_email()<< ", " <<temp_student.get_student_age()<< ", " << endl;
-			
+		//cout << student << " the label for the student id by the loop" << endl;
 
 		
-
+				//cout << student1.get_first_name() << " is the first name of student1" << endl;
 		
 		//cout << studentData[i] << endl; 
 	}

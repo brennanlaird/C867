@@ -28,7 +28,7 @@ void Student::set_first_name(string new_first_name) { first_name = new_first_nam
 void Student::set_last_name(string new_last_name) { last_name = new_last_name; }
 void Student::set_student_email(string new_student_email) { student_email = new_student_email; }
 void Student::set_student_age(int new_student_age) { student_age = new_student_age; }
-void Student::set_degree_program(){}
+void Student::set_degree_program(DegreeProgram new_degree_program){}
 void Student::set_day_to_complete(){}
 
 //Getters - retrieving the value of the variable from the class
