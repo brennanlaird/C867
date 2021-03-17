@@ -1,5 +1,4 @@
 #pragma once
-//#include <iostream>
 #include "Degree.h"
 
 using namespace std;
@@ -27,7 +26,7 @@ public:
 	void set_student_email(string new_student_email);
 	void set_student_age(int new_student_age);
 	void set_degree_program(DegreeProgram new_degree_program);
-	void set_day_to_complete();
+	void set_day_to_complete(int* new_day_to_complete);
 
 	//Defining the getters for each private class variable
 	string get_student_id();
@@ -36,16 +35,15 @@ public:
 	string get_student_email();
 	int get_student_age();
 	DegreeProgram get_degree_program();
-	int get_day_to_complete();
+	int* get_day_to_complete();
 
 
 
-	//DEfine the print method for the student class
-	void stud_print();
+	//Define the print method for the student class
+	void print();
 
 
 
-	//Defining a test method - Delete this
-	void student_test();
+
 
 };

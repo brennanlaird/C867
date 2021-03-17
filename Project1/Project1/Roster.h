@@ -19,9 +19,20 @@ public:
 	//Destructor
 	~Roster();
 
-	string* classRosterArray[];
 
-	void rostertest();
+	void add();
+
+	void remove();
+
+	void printAll();
+
+	void printAverageDaysInCourse();
+
+	void printInvalidEmails();
+
+	void printByDegreeProgram();
+
+
 
 	void parse_string();
 };
