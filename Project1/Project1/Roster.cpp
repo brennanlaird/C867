@@ -4,7 +4,7 @@
 #include <string>
 
 
-#include "Student.h"
+//#include "Student.h"
 #include "Roster.h"
 #include "Degree.h"
 
@@ -20,24 +20,22 @@ const string studentData[] =
 "A5,Brennan,Laird,blair10@wgu.edu,41,7,14,18,SOFTWARE" };
 
 
-int const table_size = sizeof(studentData) / sizeof(string); //sets the size of the student data table to a constant
-
+//String for dereferencing from the enum - This might be better in a more global location?
 string degree_array[] = { "SECURITY", "SOFTWARE", "NETWORK", "NA" };
+
 
 
 //Constructor for the roster object
 Roster::Roster() {
 
-	//cout << "Roster constructor has run" << endl;
-	
 	
 		
 	//creates an array of pointers based on the size of the data table
-	Student* classRosterArray[table_size];
+	//Student* classRosterArray[table_size];
 
 
 	//initializes a new student for each position in the array of pointers
-	for (int i = 0; i < table_size; i++) {
+	for (int i = 0; i < 5; i++) {
 		classRosterArray[i] = new Student;
 
 		//cout << classRosterArray[i] << " and " << &classRosterArray[i] << endl;
@@ -108,8 +106,7 @@ Roster::Roster() {
 
 		classRosterArray[i] = ptr_student;
 		
-		//cout << classRosterArray[i]->get_first_name() << endl;
-		
+				
 	}
 
 
@@ -120,17 +117,19 @@ Roster::Roster() {
 Roster::~Roster(){}
 
 
-
+//Print all
 void Roster::printAll() {
 
-	for (int i = 0; i < table_size; i++) {
+	for (int i = 0; i < 5; i++) {
 		
-		
-		classRosterArray[i].print();
+		//call the print function from the book method
+		classRosterArray[i]->print();
 
 	}
 
 }
+
+
 
 
 

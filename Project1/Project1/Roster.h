@@ -2,8 +2,8 @@
 /*
 #include <iostream>
 
-#include "Degree.h"
-#include "Student.h"*/
+#include "Degree.h"*/
+#include "Student.h"
 
 using namespace std;
 
@@ -12,12 +12,15 @@ private:
 	//nothing here yet
 
 public:
-
+	
 	//Constructor
 	Roster();
 
 	//Destructor
 	~Roster();
+
+	//initialize the array of pointers
+	Student* classRosterArray[5];
 
 
 	void add();
@@ -31,8 +34,6 @@ public:
 	void printInvalidEmails();
 
 	void printByDegreeProgram();
-
-
 
 	void parse_string();
 };

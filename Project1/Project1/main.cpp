@@ -15,14 +15,17 @@ int main ()
 	//Github https://github.com/brennanlaird/C867
 	
 	
-	
+	Student teststudent;
 
 	
 	Roster classRoster; //creates an instance of the Roster class 
 	
 	classRoster.printAll();
-	
 
+	//classRoster.directPrint();
+
+	//teststudent.print();
+	
 
 
 
