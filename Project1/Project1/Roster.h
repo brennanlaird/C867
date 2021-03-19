@@ -25,15 +25,15 @@ public:
 
 	void add();
 
-	void remove();
+	void remove(string remove_student_ID);
 
 	void printAll();
 
-	void printAverageDaysInCourse();
+	void printAverageDaysInCourse(string stud_ID);
 
 	void printInvalidEmails();
 
-	void printByDegreeProgram();
+	void printByDegreeProgram(DegreeProgram degree_to_print);
 
 	void parse_string();
 };

@@ -10,9 +10,7 @@ using namespace std;
 Student::Student() {
 	
 	
-	cout << "A student has been constructed" << endl;
-	
-	
+		
 	//initialize string variables
 	student_id = "";
 	first_name = "";
@@ -33,7 +31,7 @@ Student::Student() {
 
 //Destructor for the student class to release memory
 Student::~Student() {
-
+	cout << "Student destructor has run" << endl;
 }
 
 

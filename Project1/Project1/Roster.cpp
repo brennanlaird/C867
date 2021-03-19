@@ -23,19 +23,15 @@ const string studentData[] =
 //String for dereferencing from the enum - This might be better in a more global location?
 string degree_array[] = { "SECURITY", "SOFTWARE", "NETWORK", "NA" };
 
+//sets the size of the table to a variable for use in loop increments
+int table_size = sizeof(studentData) / sizeof(string);
 
 
 //Constructor for the roster object
 Roster::Roster() {
 
-	
-		
-	//creates an array of pointers based on the size of the data table
-	//Student* classRosterArray[table_size];
-
-
-	//initializes a new student for each position in the array of pointers
-	for (int i = 0; i < 5; i++) {
+	//initializes a new student for each position in the array of pointers and populate that from the student data table
+	for (int i = 0; i < table_size; i++) {
 		classRosterArray[i] = new Student;
 
 		//cout << classRosterArray[i] << " and " << &classRosterArray[i] << endl;
@@ -52,6 +48,8 @@ Roster::Roster() {
 
 		char delimit = ',';
 
+		//creates a temporary student object to parse the string data. This was done as a pointer because it allows the the temp object to be assigned
+		//to the array of pointers to student objects.
 		Student* ptr_student;
 		ptr_student = new Student;
 		
@@ -86,9 +84,9 @@ Roster::Roster() {
 
 		ptr_student->set_day_to_complete(temp_day_to_complete);
 
+		
 		//this retrieves the string related to the degree progrma
 		getline(input_stream, degree_string, delimit);
-
 
 		//depending on the result, the if-else statements assign the matching degree program to the enum value
 		if (degree_string == "SECURITY")
@@ -114,15 +112,15 @@ Roster::Roster() {
 
 
 //Destructor to release memory
-Roster::~Roster(){}
+Roster::~Roster() { cout << "Roster destructor has run" << endl; }
 
 
-//Print all
+//Printall loops through each item and calls the print function from the student method for it
 void Roster::printAll() {
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < table_size; i++) {
 		
-		//call the print function from the book method
+		//call the print function from the student method
 		classRosterArray[i]->print();
 
 	}
@@ -131,14 +129,171 @@ void Roster::printAll() {
 
 
 
+void Roster::remove(string remove_student_ID) {
+	
+	
+
+	//sets up a boolean flag to determine if the ID has been found
+	bool found_flag = false;
+
+	for (int i = 0; i < table_size; i++) {
+		if (classRosterArray[i]->get_student_id() == remove_student_ID) {
+			found_flag = true; //found flag set to true
+			
+			
+			//cout << "ID found, now remove it. Found flag is set to: " << found_flag << endl;
+
+
+			table_size = table_size - 1; //reduces the table size as we are removing one element
+
+
+			//This loop starts where the ID was found and shifts every item. This deletes the found item by shifting the one below it into place
+			for (int j = i; j < table_size; j++) {
+				classRosterArray[j] = classRosterArray[j + 1];
+
+
+			}
+			
+
+		}
+		
+
+
+		
+
+	}
+
+	
+	
+	//If the boolean flag remains false after the For loop, report that the id was not found
+	if (found_flag == false) { cout << "The ID was not found" << endl; }
+
+	
+	//find the student id in the array
+
+	//push that id to the end of the list of items
+
+	//decrement the index by 1 to ensure the last item does not display
+}
+
+
+void Roster::printInvalidEmails() {
+	
+	bool valid_email = true;
+	bool valid_char = true;
+	string email_search;
+	size_t found; //this will point to the position in the string where the character was found or to the end of the string if it wasn't found
+	
+	for (int i = 0; i < table_size; i++) {
+
+		//sets the base condition at the start of the For-loop - other wise everything after a false validity stays false
+		valid_email = true;
+		valid_char = true;
+		
+		
+		//Putting the objects email into a string
+		email_search = classRosterArray[i]->get_student_email();
+
+				
+		//searches the email string for @
+		found = email_search.find("@");
+		
+		
+		if (found > email_search.length()) { valid_email = false; }
+		
+		//cout << email_search << " is " << valid_email << " because found is: "<< found << " and the length is: " << email_search.length() <<  endl;
+		
+		
+		//if the @ symbol is present this if statement will check if the next character is a valid alphanumeric
+		if (found < email_search.length()) {
+			found++; //increment found by one to check the character after the @ as it must be text
+			valid_char = isalnum(email_search[found]);
+		}
+		
+		if (valid_char == false) { valid_email = false; } //if a valid character isn't present than the email is invalid
+		
+
+		//searches the email string for .
+		found = email_search.find(".");
+		if (found > email_search.length()) { valid_email = false; }
+
+
+		//searches for a blank space in the email string
+		found = email_search.find(" ");
+		if (found < email_search.length()) { valid_email = false; }
+
+
+		//print the email if it is deemed invalid
+		if (valid_email == false) {
+
+			cout << "Invalid email: " << email_search << endl;
+
+		}
+		
+
+	}
 
 
 
+}
+
+
+void Roster::printAverageDaysInCourse(string stud_ID) {
+	
+	for (int i = 0; i < table_size; i++) {
+		
+		if (classRosterArray[i]->get_student_id() == stud_ID) {
+			int day0, day1, day2; //delcare integers to hold the data from the get function
+			double avg;
+
+			//assign the values from the student object to the local integer variable
+			day0 = classRosterArray[i]->get_day_to_complete()[0];
+			day1 = classRosterArray[i]->get_day_to_complete()[1];
+			day2 = classRosterArray[i]->get_day_to_complete()[2];
+
+			avg = (day0 + day1 + day2) / 3.0; //computes the average
+
+			cout << "Average for " << stud_ID << " is: " << avg << endl;
+		}
+
+	}
+}
 
 
 
+void Roster::printByDegreeProgram(DegreeProgram degree_to_print) {
+	
+	cout << "Printing students in the " << degree_array[degree_to_print] <<" degree program." << endl;
+	
+	int student_count = 0;
+	DegreeProgram local_degree;
+
+	for (int i = 0; i < table_size; i++) {
+
+		//sets a local variable in the function to the value of the degree program for the studen being checked
+		local_degree = classRosterArray[i]->get_degree_program();
+
+		
+		//if the student matches then print out the info
+		if (local_degree == degree_to_print) {
+						
+			classRosterArray[i]->print();
+			student_count++;
+		}
 
 
+
+	}
+	//Displays a message if no valid students are found
+	if (student_count == 0) { cout << "No matching students found" << endl; }
+
+
+
+}
+
+
+
+// this is old code that isn't used anymore. This was built to try different methods to parse the student data table. It should be deleted then tested to make sure 
 void Roster::parse_string() {
 
 	string degree_array[] = { "SECURITY", "SOFTWARE", "NETWORK", "NA" };
