@@ -19,11 +19,11 @@ public:
 	//Destructor
 	~Roster();
 
-	//initialize the array of pointers
+	//Initialize the array of student object pointers
 	Student* classRosterArray[5];
 
-
-	void add();
+	
+	void add(string studentID, string firstName, string lastName, string emailAddress, int age, int daysInCourse1, int daysInCourse2, int daysInCourse3, DegreeProgram degreeprogram);
 
 	void remove(string remove_student_ID);
 
@@ -35,5 +35,5 @@ public:
 
 	void printByDegreeProgram(DegreeProgram degree_to_print);
 
-	void parse_string();
+
 };

@@ -9,8 +9,6 @@ using namespace std;
 //Constructor for the student class
 Student::Student() {
 	
-	
-		
 	//initialize string variables
 	student_id = "";
 	first_name = "";
@@ -29,7 +27,7 @@ Student::Student() {
 	degree_program = NA;
 }
 
-//Destructor for the student class to release memory
+//Destructor for the student class to release memory. The output is available to note when it has run
 Student::~Student() {
 	cout << "Student destructor has run" << endl;
 }
@@ -43,12 +41,11 @@ void Student::set_student_email(string new_student_email) { this->student_email 
 void Student::set_student_age(int new_student_age) { this->student_age = new_student_age; }
 void Student::set_degree_program(DegreeProgram new_degree_program) { this->degree_program = new_degree_program; }
 
+//The setter for the days to complete array uses a for loop to set each value
 void Student::set_day_to_complete(int* new_day_to_complete){
 	for (int k = 0; k < 3; k++) {
 		this->day_to_complete[k] = new_day_to_complete[k];
-
 	}
-
 }
 
 //Getters - retrieving the value of the variable from the class

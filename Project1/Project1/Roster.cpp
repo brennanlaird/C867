@@ -4,7 +4,6 @@
 #include <string>
 
 
-//#include "Student.h"
 #include "Roster.h"
 #include "Degree.h"
 
@@ -34,8 +33,7 @@ Roster::Roster() {
 	for (int i = 0; i < table_size; i++) {
 		classRosterArray[i] = new Student;
 
-		//cout << classRosterArray[i] << " and " << &classRosterArray[i] << endl;
-		
+		//Temporary variable for adding parsing the table input into a student object
 		string temp_student_id, temp_first_name, temp_last_name, temp_student_email, age_string, day0_string, day1_string, day2_string, degree_string;
 		int temp_student_age, temp_day0, temp_day1, temp_day2;
 		DegreeProgram temp_degree = NA;
@@ -53,8 +51,10 @@ Roster::Roster() {
 		Student* ptr_student;
 		ptr_student = new Student;
 		
+		//Gets each item from the string stream as seperated by the delimiting character and then sets it using the setter for the student object
 		getline(input_stream, temp_student_id, delimit);
 		ptr_student->set_student_id(temp_student_id);
+		
 		getline(input_stream, temp_first_name, delimit);
 		ptr_student->set_first_name(temp_first_name);
 
@@ -71,17 +71,18 @@ Roster::Roster() {
 
 		//retieves the total days to complete the 3 classes. These are stored in seperate variables and zero indexed
 		getline(input_stream, day0_string, delimit);
-		temp_day0 = stoi(day0_string);
+		temp_day0 = stoi(day0_string); //changes the string retrieved from the table to an integer
 		temp_day_to_complete[0] = stoi(day0_string);
 
 		getline(input_stream, day1_string, delimit);
-		temp_day1 = stoi(day1_string);
+		temp_day1 = stoi(day1_string); //changes the string retrieved from the table to an integer
 		temp_day_to_complete[1] = stoi(day1_string);
 
 		getline(input_stream, day2_string, delimit);
-		temp_day2 = stoi(day2_string);
+		temp_day2 = stoi(day2_string); //changes the string retrieved from the table to an integer
 		temp_day_to_complete[2] = stoi(day2_string);
 
+		//Sets the full days to complete using th fully populated array
 		ptr_student->set_day_to_complete(temp_day_to_complete);
 
 		
@@ -102,12 +103,9 @@ Roster::Roster() {
 		ptr_student->set_degree_program(temp_degree);
 
 
-		classRosterArray[i] = ptr_student;
-		
-				
+		//Sets the temporary student object to the appropriate position in the roster array
+		classRosterArray[i] = ptr_student;			
 	}
-
-
 }
 
 
@@ -117,10 +115,11 @@ Roster::~Roster() { cout << "Roster destructor has run" << endl; }
 
 //Printall loops through each item and calls the print function from the student method for it
 void Roster::printAll() {
-
+	
 	for (int i = 0; i < table_size; i++) {
 		
 		//call the print function from the student method
+		
 		classRosterArray[i]->print();
 
 	}
@@ -130,8 +129,6 @@ void Roster::printAll() {
 
 
 void Roster::remove(string remove_student_ID) {
-	
-	
 
 	//sets up a boolean flag to determine if the ID has been found
 	bool found_flag = false;
@@ -139,41 +136,53 @@ void Roster::remove(string remove_student_ID) {
 	for (int i = 0; i < table_size; i++) {
 		if (classRosterArray[i]->get_student_id() == remove_student_ID) {
 			found_flag = true; //found flag set to true
-			
-			
-			//cout << "ID found, now remove it. Found flag is set to: " << found_flag << endl;
-
 
 			table_size = table_size - 1; //reduces the table size as we are removing one element
 
-
 			//This loop starts where the ID was found and shifts every item. This deletes the found item by shifting the one below it into place
+			//This skips over deleting the lst item on the list. It will leave a duplicate in the array that is not printed because of the table_size change
 			for (int j = i; j < table_size; j++) {
 				classRosterArray[j] = classRosterArray[j + 1];
-
-
 			}
-			
-
 		}
-		
-
-
-		
-
 	}
-
-	
-	
+		
 	//If the boolean flag remains false after the For loop, report that the id was not found
 	if (found_flag == false) { cout << "The ID was not found" << endl; }
+}
 
+void Roster::add(string studentID, string firstName, string lastName, string emailAddress, int age, int daysInCourse1, int daysInCourse2, int daysInCourse3, DegreeProgram degreeprogram) {
 	
-	//find the student id in the array
+	table_size++; //increments the size to ensure loops go through the appropriate amount of times
+	int a = table_size-1; //uses this to add the new student object to the roster
+	
+	int days_array[3]; //temporary array to pass to the setter
 
-	//push that id to the end of the list of items
+	//sets up a new temporary student object
+	Student* add_student;
+	add_student = new Student;
 
-	//decrement the index by 1 to ensure the last item does not display
+
+	//Setter functions for the strings and age
+	add_student->set_student_id(studentID);
+	add_student->set_first_name(firstName);
+	add_student->set_last_name(lastName);
+	add_student->set_student_email(emailAddress);
+	add_student->set_student_age(age);
+
+	//populate the temporary array with the integers passed in
+	days_array[0] = daysInCourse1;
+	days_array[1] = daysInCourse2;
+	days_array[2] = daysInCourse3;
+
+	//sets the days to complete array by passing the temporary array to the setter
+	add_student->set_day_to_complete(days_array);
+
+	//sets the degree program based on the passed in value
+	add_student->set_degree_program(degreeprogram);
+
+	//set the new spot in the array to the values of the temporary student
+	classRosterArray[a] = add_student;
 }
 
 
@@ -198,19 +207,17 @@ void Roster::printInvalidEmails() {
 		//searches the email string for @
 		found = email_search.find("@");
 		
-		
+		//if this is found after the length of the email string we know it is invalid
 		if (found > email_search.length()) { valid_email = false; }
 		
-		//cout << email_search << " is " << valid_email << " because found is: "<< found << " and the length is: " << email_search.length() <<  endl;
-		
-		
+				
 		//if the @ symbol is present this if statement will check if the next character is a valid alphanumeric
 		if (found < email_search.length()) {
 			found++; //increment found by one to check the character after the @ as it must be text
 			valid_char = isalnum(email_search[found]);
 		}
 		
-		if (valid_char == false) { valid_email = false; } //if a valid character isn't present than the email is invalid
+		if (valid_char == false) { valid_email = false; } //if a valid character isn't present then the email is invalid
 		
 
 		//searches the email string for .
@@ -291,93 +298,6 @@ void Roster::printByDegreeProgram(DegreeProgram degree_to_print) {
 
 }
 
-
-
-// this is old code that isn't used anymore. This was built to try different methods to parse the student data table. It should be deleted then tested to make sure 
-void Roster::parse_string() {
-
-	string degree_array[] = { "SECURITY", "SOFTWARE", "NETWORK", "NA" };
-	
-	for (int i = 0; i < sizeof(studentData) / sizeof(string); i++) {
-
-		string temp_student_id, temp_first_name, temp_last_name, temp_student_email, age_string, day0_string, day1_string, day2_string, degree_string;
-		int temp_student_age, temp_day0, temp_day1, temp_day2;
-		DegreeProgram temp_degree = NA;
-
-		int temp_day_to_complete[3];
-
-
-		stringstream input_stream; //sets up a string stream and stores the single line from student data to that string stream in the next line
-		input_stream << studentData[i];
-
-		char delimit = ',';
-
-				
-					
-		Student temp_student; //creates a temporary student
-		
-		getline(input_stream, temp_student_id, delimit);
-		temp_student.set_student_id(temp_student_id);
-		
-		getline(input_stream, temp_first_name, delimit); 
-		temp_student.set_first_name(temp_first_name);
-
-		getline(input_stream, temp_last_name, delimit);
-		temp_student.set_last_name(temp_last_name);
-
-		getline(input_stream, temp_student_email, delimit);
-		temp_student.set_student_email(temp_student_email);
-
-		getline(input_stream, age_string, delimit);
-		temp_student_age = stoi(age_string); //changes the string retrieved from the table to an integer
-		temp_student.set_student_age(temp_student_age);
-
-		
-		
-		//retieves the total days to complete the 3 classes. These are stored in seperate variables and zero indexed
-		getline(input_stream, day0_string, delimit);
-		temp_day0 = stoi(day0_string);
-		temp_day_to_complete[0] = stoi(day0_string);
-
-		getline(input_stream, day1_string, delimit);
-		temp_day1 = stoi(day1_string);
-		temp_day_to_complete[1] = stoi(day1_string);
-
-		getline(input_stream, day2_string, delimit);
-		temp_day2 = stoi(day2_string);
-		temp_day_to_complete[2] = stoi(day2_string);
-
-		temp_student.set_day_to_complete(temp_day_to_complete);
-		
-
-
-		//this retrieves the string related to the degree progrma
-		getline(input_stream, degree_string, delimit);
-		
-		
-		//depending on the result, the if-else statements assign the matching degree program to the enum value
-		if (degree_string == "SECURITY")
-			temp_degree = SECURITY;
-		else if (degree_string == "NETWORK")
-			temp_degree = NETWORK;
-		else if (degree_string == "SOFTWARE")
-			temp_degree = SOFTWARE;
-		else
-			temp_degree = NA;
-
-		//sets the enum value for the degree program for the temp student
-		temp_student.set_degree_program(temp_degree);
-		
-			
-		
-				
-		//cout << "The student id is: " << temp_student.get_student_id() << " and the rest is: " << flush;
-		//cout << temp_student.get_first_name()<< ", " << temp_student.get_last_name()<< ", " << temp_student.get_student_email()<< ", " <<temp_student.get_student_age()<< ", " << endl;
-		//cout << temp_student.get_day_to_complete()[0] << " , " << temp_student.get_day_to_complete()[1] << " , " << temp_student.get_day_to_complete()[2] << " , " <<  degree_array[temp_student.get_degree_program()] << " and that is it..." << endl;
-		//cout << temp_day2 << " is this right?" << endl;
-
-	}
-}
 
 
 
