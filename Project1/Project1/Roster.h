@@ -29,7 +29,7 @@ public:
 
 	void printAll();
 
-	void printAverageDaysInCourse(string stud_ID);
+	void printAverageDaysInCourse();
 
 	void printInvalidEmails();
 

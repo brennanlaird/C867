@@ -245,14 +245,17 @@ void Roster::printInvalidEmails() {
 }
 
 
-void Roster::printAverageDaysInCourse(string stud_ID) {
+void Roster::printAverageDaysInCourse() {
 	
 	for (int i = 0; i < table_size; i++) {
 		
-		if (classRosterArray[i]->get_student_id() == stud_ID) {
+		
 			int day0, day1, day2; //delcare integers to hold the data from the get function
 			double avg;
+			string id = classRosterArray[i]->get_student_id(); //gets the student id based on the loop iteration
 
+			
+			
 			//assign the values from the student object to the local integer variable
 			day0 = classRosterArray[i]->get_day_to_complete()[0];
 			day1 = classRosterArray[i]->get_day_to_complete()[1];
@@ -260,8 +263,8 @@ void Roster::printAverageDaysInCourse(string stud_ID) {
 
 			avg = (day0 + day1 + day2) / 3.0; //computes the average
 
-			cout << "Average for " << stud_ID << " is: " << avg << endl;
-		}
+			cout << "Average days in course for " << id << " is: " << avg << endl;
+		
 
 	}
 }

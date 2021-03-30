@@ -31,7 +31,7 @@ int main ()
 				  
 				  
 	//Calls the function to print the averasge days in course, sending student ID A3
-	classRoster.printAverageDaysInCourse("A3");
+	classRoster.printAverageDaysInCourse();
 
 	cout << endl; //new line for formatting	
 

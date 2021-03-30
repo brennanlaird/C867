@@ -70,7 +70,7 @@ void Student::print() {
 	
 
 	//Uses the array for days to complete to print
-	cout << "daysInCourse: {" << this->day_to_complete[0] << ", " << this->day_to_complete[1] << ", " << this->day_to_complete[2] << "} \t" << flush;
+	cout << "Days in Courses: " << this->day_to_complete[0] << ", " << this->day_to_complete[1] << ", " << this->day_to_complete[2] << " \t" << flush;
 	
 	//Sets a string to dereference the enum - Since this is used multiple places in might be better as a seperate function??
 	string print_degree_array[] = { "SECURITY", "SOFTWARE", "NETWORK", "NA" };
